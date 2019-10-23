@@ -4,6 +4,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from .forms import CustomUserCreationForm
 from .models import User
+
 # Create your views here.
 def signup(request):
     if request.method == "POST":
@@ -41,3 +42,14 @@ def user_page(request, id):
         'user_info': user_info
     }
     return render(request, 'accounts/user_page.html', context)
+
+def follow(request, id):
+    you = get_object_or_404(User, id=id)
+    me = request.user
+
+    if me in you.followers.all():
+        you.followers.remove(me)
+    else:
+        you.followers.add(me)
+
+    return redirect('accounts:user_page', id)
