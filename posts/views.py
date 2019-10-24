@@ -83,10 +83,11 @@ def create_comment(request, id):
     
 
 def hashtags(request, id):
-    hashtag = get_object_or_404(HashTag, id=id)
-
-    posts = hashtag.taged_post.all()
-
+    hashtag = get_object_or_404(Hashtag, id=id)
+    posts = hashtag.taged_posts.all()
+    paginator = Paginator(posts, 2)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
     context = {
         'posts': posts
     }
