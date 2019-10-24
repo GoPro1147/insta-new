@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% load socialaccount %}
 {% block body %}
   <form action="" method="post">
     {% csrf_token %}
-    {{form}}
+    {% bootstrap_form form %}
     <input type="submit">
   </form>
+
+  <a href="{% provider_login_url 'kakao' %}">
+    <img src="{% static 'accounts/p_talk.png' %}" alt="">
+  </a>
 {% endblock %}

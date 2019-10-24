@@ -1,0 +1,18 @@
+{% load make_link %}
+<div class="card col-4 my-2" style="width: 18rem;">
+    <a href="{% url 'posts:detail' post.id %}"><img src="{{post.image.url}}" class="card-img-top" alt="..."></a>
+    <div class="card-body">
+      <h5 class="card-title"></h5>
+      <p class="card-text">{{post|hashtag_link|safe}}</p>
+      {% if user in post.like_users.all %}
+        <a href="{% url 'posts:like' post.id %}" class="btn btn-primary">좋아요 : {{post.like_users.all.count}}</a>
+      {% else %}
+        <a href="{% url 'posts:like' post.id %}" class="btn btn-outline-primary">좋아요 : {{post.like_users.all | length}}</a>
+      {% endif %}
+
+      {% if user == post.user %}
+        <a href="{% url 'posts:update' post.id %}" class="btn btn-warning">수정</a>
+        <a href="{% url 'posts:delete' post.id %}" class="btn btn-danger">삭제</a>
+      {% endif %}
+    </div>
+  </div>
